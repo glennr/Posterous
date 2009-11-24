@@ -4,22 +4,44 @@ http://github.com/jordandobson/Posterous/tree/master
 
 == DESCRIPTION:
 
-The Posterous gem provides posting to Posterous.com using your email, password, site id(if you have multiple sites) and your blog content. With this gem, you have access to add an entry on posterous by providing these options a title, body text, date, tags, set to autopost, set private, posted by source name and a posted by source link to Posterous. You can include no options, all options or anything in between. 
+The Posterous gem provides reading from and posting to Posterous.com, including (optional) authentication using email/password/[site id]. 
 
-Posting images with posts, posting only images and pulling down your posts will be available very soon. 
+With this gem, you
+  1. Read entries from Posterous (added by Glenn Roberts) 
+  2. Post an entry on posterous by providing these options a title, body text, date, tags, set to autopost, set private, posted by source name and a posted by source link to Posterous. You can include no options, all options or anything in between. 
 
-== FEATURES/PROBLEMS:
+== INSTALL:
 
-* All Fields are optional
-* Media files are not yet implemented
-* Posting Only, Reading & Images are not yet included
-* Check if a users email and password are a valid account
-* Check if a user has a valid site
-* Check if a specified site_id is valid for their account
-* Get their primary Site ID
-* This is very throughly tested
+  * sudo gem install posterous -include-dependencies
+
+== TODO
+
+  * Media files are not yet implemented
+  * Images are not yet included
+  * Check if a users email and password are a valid account
+  * Check if a user has a valid site
+  * Check if a specified site_id is valid for their account
+  * Get their primary Site ID
 
 == SYNOPSIS:
+
+=== READING
+
+Here is a contrived example;
+
+      require 'posterous'
+
+      reader = Posterous::Reader.new("siyelo", nil, 2)
+
+      reader.response.each do |post|
+        puts post['url']
+        puts post['link']
+        puts post['title']
+        puts post['body']
+        puts post['commentCount']
+      end
+
+=== POSTING
 
 1. Instantiate your account
 
@@ -85,14 +107,13 @@ Posting images with posts, posting only images and pulling down your posts will 
     * See the tests for this gem for failure responses and responses for other methods
 
 
-# MORE INFO
+== MORE INFO
 
-  * URL
+  * Posting URL
   
     http://posterous.com/api/newpost
 
-  * IMPLEMENTED FIELDS - All are optional
-  
+  * IMPLEMENTED FIELDS  
     "site_id"     Optional. Id of the site to post to. 
     "title"       Optional. Title of post
     "body"        Optional. Body of post
@@ -104,16 +125,12 @@ Posting images with posts, posting only images and pulling down your posts will 
     "private"     Optional. 0 or 1.
 
   * UNIMPLEMENTED FIELDS - These will likely be implemented in a future release
-
     "media"       Optional. File data. Multiple files OK
 
 == REQUIREMENTS:
 
-* HTTPparty, & Mocha (For Tests)
-
-== INSTALL:
-
-* sudo gem install posterous -include-dependencies
+  * HTTPparty
+  * Mocha (For Tests)
 
 == LICENSE:
 

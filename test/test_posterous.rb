@@ -12,7 +12,8 @@ class TestPosterous < Test::Unit::TestCase
     @new_obj_with_id          = Posterous::Client.new(@e, @p, "174966")
     @new_obj_with_bad_id      = Posterous::Client.new(@e, @p, "badID")
     @new_obj_with_invalid_id  = Posterous::Client.new(@e, @p, "666")
-
+  
+    
     @private_url_path  = /[.]posterous[.]com\/private\//
 
     @resp_ok           ={ "rsp"     => {
@@ -97,6 +98,14 @@ class TestPosterous < Test::Unit::TestCase
                           "url"     => "http://post.ly/gxK",
                           "id"      => "891064",
                           "longurl" => "http://glue.posterous.com/private/tGIEAateBy" },
+                          "stat"    => "ok" }}
+                              
+    @get_read_success  ={ "rsp"     => {
+                          "post"    => {
+                          "title"   => "Get My Title",
+                          "url"     => "http://post.ly/dFW",
+                          "id"      => "848898",
+                          "longurl" => "http://glue.posterous.com/687985" },
                           "stat"    => "ok" }}
 
   end

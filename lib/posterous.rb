@@ -3,40 +3,76 @@ require 'httparty'
 
 module Posterous
 
-  VERSION = '0.1.6'
+  VERSION = '0.1.7'
 
   class AuthError < StandardError; end
   class TagError  < StandardError; end
   class SiteError < StandardError; end
-
-  ###
-  ### FUTURE PLANS
-  ###
-  #   * Include media with your post
-  #   * Post only a media file and get a url for it back
-  #   * Allow reading in posterous posts
-  #   * Include more usage examples outside of readme
-
-  class Client
-
-    DOMAIN      = 'posterous.com'
-    POST_PATH   = '/api/newpost'
-    AUTH_PATH   = '/api/getsites'
   
+  
+  DOMAIN      = 'posterous.com'
+  POST_PATH   = '/api/newpost'
+  AUTH_PATH   = '/api/getsites'
+  READ_PATH   = '/api/readposts'
+    
+  #   TODO: Include media with your post
+  #   TODO: Post only a media file and get a url for it back
+  
+  # Posterous reader 
+  # http://posterous.com/api/reading  
+  class Reader
+    
+    include  HTTParty
+    base_uri DOMAIN
+    
+    attr_reader :response
+    
+    ### Non-authenticated initialization
+    def initialize hostname = "", site_id = nil, num_posts = nil, page = nil, tag = nil
+      raise AuthError, 'Either Site Id or Hostname must be supplied if not using authentication.' if \
+        (hostname == "" && !site_id.is_a?(Integer)) || (!hostname.is_a?(String) && site_id == nil) 
+      @site_id = site_id ? site_id.to_s : site_id
+      @hostname = hostname
+      @num_posts = num_posts ? num_posts.to_s : num_posts
+      @page = page ? page.to_s : page
+      @tag = tag ? tag.to_s : tag
+      @response = read_posts
+      self
+    end
+    
+    def read_posts
+      self.class.get(READ_PATH, :query => build_query)["rsp"]["post"]
+    end
+    
+    def build_query
+      query   = { :site_id    => @site_id,
+                  :hostname   => @hostname,
+                  :num_posts  => @num_posts,
+                  :page       => @page,
+                  :tag        => @tag }
+      query.delete_if { |k,v| !v }
+      query
+    end
+  end
+  
+  
+  class Client
+    
     include  HTTParty
     base_uri DOMAIN
 
     attr_accessor :title, :body, :source, :source_url, :date
     attr_reader   :private_post, :autopost, :site_id, :tags
 
-    def initialize user, pass, site_id = nil
+    ### Authenticated initialization
+    def initialize user, pass, site_id = nil, hostname = ""
       raise AuthError, 'Either Username or Password is blank and/or not a string.' if \
         !user.is_a?(String) || !pass.is_a?(String) || user == "" || pass == ""
       self.class.basic_auth user, pass
       @site_id = site_id ? site_id.to_s : site_id
       @source = @body = @title = @source_url = @date = @media = @tags = @autopost = @private_post = nil
     end
-
+    
     def site_id= id
       @site_id = id.to_s
     end
@@ -105,7 +141,6 @@ module Posterous
     
     def add_post
       self.class.post(POST_PATH, :query => build_query)
-    end
-    
+    end  
   end
 end
