@@ -12,7 +12,18 @@ With this gem, you
 
 == INSTALL:
 
-  * sudo gem install posterous -include-dependencies
+  Original Gem
+    
+    sudo gem install posterous -include-dependencies
+    
+  GlennR's Gem
+  
+      [gem sources -a http://gemcutter.org]
+      sudo gem install glennr-posterous
+    
+    In your project's environment.rb
+    
+      config.gem 'glennr-posterous', :source => 'http://gemcutter.org', :version => '>= 0.1.7', :lib => 'posterous'
 
 == TODO
 
