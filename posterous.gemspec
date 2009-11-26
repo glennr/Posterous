@@ -1,20 +1,20 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{posterous}
-  s.version = "0.1.6"
+  s.name = %q{glennr-posterous}
+  s.version = "0.1.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jordan Dobson"]
-  s.date = %q{2009-05-29}
+  s.authors = ["Jordan Dobson", "Glenn Roberts"]
+  s.date = %q{2009-11-26}
   s.default_executable = %q{posterous}
-  s.description = %q{The Posterous gem provides posting to Posterous.com using your email, password, site id(if you have multiple sites) and your blog content.}
-  s.email = ["jordan.dobson@madebysquad.com"]
+  s.description = %q{The Posterous gem provides reading & posting from/to Posterous.com using your email, password, site id(if you have multiple sites) and your blog content.}
+  s.email = ["g@glenn-roberts.com"]
   s.executables = []
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.files = ["History.txt", "Manifest.txt", "README.txt", "Rakefile", "bin/posterous", "lib/posterous.rb", "test/test_posterous.rb"]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/jordandobson/posterous/tree/master}
+  s.homepage = %q{http://github.com/glennr/Posterous}
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{posterous}
